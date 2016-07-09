@@ -1,0 +1,17 @@
+<launch>
+
+  <!-- View the raw camera output -->
+  <node pkg="image_view" type="image_view" name="image_view_short" >
+    <remap from="image" to="/short_camera/image_raw" />
+  </node>
+
+  <!-- Convert incoming image to OpenCV format-->
+  <node pkg="kingfisher_vision" type="kingfisher_vision_short" name="kingfisher_vision_short" output="screen">
+  </node>
+
+   <!-- View the openCV modified camera output -->
+  <node pkg="image_view" type="image_view" name="output_video_view_short" >
+    <remap from="image" to="/kingfisher_vision_short/output_video" />
+  </node>
+    
+</launch>

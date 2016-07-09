@@ -1,0 +1,32 @@
+<launch>
+  <!-- Set this to your camera's name -->
+  <arg name="cam_name" value="camera" />
+
+  <!-- Start the GSCAM node to enable camera use -->
+  <env name="GSCAM_CONFIG" value="v4l2src device=/dev/video0 ! video/x-raw-rgb,framerate=30/1 ! ffmpegcolorspace" />
+  <node pkg="gscam" type="gscam" name="$(arg cam_name)">
+    <param name="camera_name" value="$(arg cam_name)" />
+    <remap from="camera/image_raw" to="$(arg cam_name)/image_raw" />
+  </node>
+
+  <!-- View the raw camera output -->
+  <node pkg="image_view" type="image_view" name="image_view" >
+    <remap from="image" to="/$(arg cam_name)/image_raw" />
+  </node>
+
+  <!-- Convert incoming image to OpenCV format 
+       Currently has a method to display output-->
+  <node pkg="kingfisher_vision" type="image_converter" name="image_converter" output="screen">
+  </node>
+
+   <!-- View the openCV operated camera output -->
+  <node pkg="image_view" type="image_view" name="output_video_view" >
+    <remap from="image" to="/image_converter/output_video" />
+  </node>
+
+     <!-- View the test openCV operated camera output -->
+  <node pkg="image_view" type="image_view" name="test_output_view" >
+    <remap from="image" to="/image_converter/test_output" />
+  </node>
+    
+</launch>

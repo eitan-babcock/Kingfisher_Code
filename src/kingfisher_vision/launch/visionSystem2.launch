@@ -1,0 +1,21 @@
+<launch>
+  <!-- Set this to your camera's name -->
+  <arg name="cam_name" value="camera" />
+
+  <!-- Start the pointgrey camera driver node to enable camera use -->
+  <node pkg="pointgrey_camera_driver" type="camera_node" name="camera">
+    <remap from="image_raw" to="/$(arg cam_name)/image_raw" />
+	<param name="auto_exposure" value="FALSE" />
+	<param name="exposure" value="-2.5" />.
+	<param name="auto_gain" value="FALSE" />
+	<param name="gain" value="0" />
+  </node>
+
+  <!-- View the raw camera output -->
+  <node pkg="image_view" type="image_view" name="image_view" >
+    <remap from="image" to="/$(arg cam_name)/image_raw" />
+  </node>
+
+
+    
+</launch>

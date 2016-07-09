@@ -1,0 +1,20 @@
+image_width: 1280
+image_height: 1024
+camera_name: short_camera
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [436.041893, 0, 618.569985, 0, 435.01752, 526.828797, 0, 0, 1]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [-0.259786, 0.034893, -0.002449, 0.00143, 0]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1, 0, 0, 0, 1, 0, 0, 0, 1]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [1569.891724, 0, 662.60106, 0, 0, 1638.000366, 505.841821, 0, 0, 0, 1, 0]

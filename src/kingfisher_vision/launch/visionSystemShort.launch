@@ -1,0 +1,39 @@
+<launch>
+
+  <!-- Start the pointgrey camera driver node to enable camera use -->
+  <node pkg="pointgrey_camera_driver" type="camera_node" name="short_camera">
+    <remap from="image_raw" to="/short_camera/image_raw" />
+    <param name="serial" value="15322759" />
+    <param name="auto_exposure" value="FALSE" />
+    <param name="exposure" value="-1.585" /> 
+    <!-- '-1.585 used' -->
+    <param name="auto_gain" value="FALSE" />
+    <param name="gain" value="0" />
+    <param name="auto_white_balance" value="FALSE" />
+    <param name="auto_shutter" value="FALSE" />
+    <param name="frame_rate" value="15" />
+    <param name="shutter_speed" value=".010" />
+    <!-- '0.010 used' -->
+    <param name="gamma" value="0.5" />
+    <param name="brightness" value="0" />
+  </node>
+
+  <!-- View the raw camera output -->
+  <node pkg="image_view" type="image_view" name="image_view_short" >
+    <remap from="image" to="/short_camera/image_raw" />
+  </node>
+
+  <!-- Convert incoming image to OpenCV format-->
+  <node pkg="kingfisher_vision" type="kingfisher_vision_short" name="kingfisher_vision_short" output="screen">
+  </node>
+
+   <!-- View the openCV modified camera output -->
+  <node pkg="image_view" type="image_view" name="output_video_view_short" >
+    <remap from="image" to="/kingfisher_vision_short/output_video" />
+  </node>
+
+	<!-- Start Filter Node 
+	<node pkg="kingfisher_vision" name="position_filter_short" type="position_filter_short" output="screen" />
+  -->
+    
+</launch>
