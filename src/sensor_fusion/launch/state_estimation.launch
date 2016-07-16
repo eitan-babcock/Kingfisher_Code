@@ -1,0 +1,8 @@
+<launch>
+
+  <!-- 	sensor fusion node -->
+  <node pkg="sensor_fusion" type="imu_vision_fusion" name="imu_vision_fusion" >
+  </node>
+
+
+</launch>

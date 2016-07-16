@@ -1,0 +1,62 @@
+<launch>
+
+  <!-- 	  UM7 node    -->
+  <node pkg="um7" type="um7_driver" name="um7_driver" >
+  </node>  
+
+  <!-- Flight cmd node -->
+  <node name="flight_cmd" pkg="flight_control" type="flight_cmd" >
+  </node> 
+
+
+  <!-- Nano node -->
+  <node name="serial_node" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyUSB1" >
+  </node> 
+
+  <!-- Start the pointgrey camera driver node to enable camera use -->
+  <node pkg="pointgrey_camera_driver" type="camera_node" name="short_camera">
+    <remap from="image_raw" to="/short_camera/image_raw" />
+    <param name="serial" value="15322759" />
+    <param name="auto_exposure" value="FALSE" />
+    <param name="exposure" value="-1.585" /> 
+    <!-- '-1.585 used' -->
+    <param name="auto_gain" value="FALSE" />
+    <param name="gain" value="0" />
+    <param name="auto_white_balance" value="FALSE" />
+    <param name="auto_shutter" value="FALSE" />
+    <param name="frame_rate" value="50" />
+    <param name="shutter_speed" value=".010" />
+    <!-- '0.010 used' -->
+    <param name="gamma" value="0.5" />
+    <param name="brightness" value="0" />
+  </node>
+
+  <!-- View the raw camera output -->
+  <node pkg="image_view" type="image_view" name="image_view_short" >
+    <remap from="image" to="/short_camera/image_raw" />
+  </node>
+
+  <!-- Convert incoming image to OpenCV format-->
+  <node pkg="kingfisher_vision" type="kingfisher_vision_short" name="kingfisher_vision_short" >
+  </node>
+
+   <!-- View the openCV modified camera output -->
+  <node pkg="image_view" type="image_view" name="output_video_view_short" >
+    <remap from="image" to="/kingfisher_vision_short/output_video" />
+  </node>
+
+  <!-- Start Filter Node 
+  <node pkg="kingfisher_vision" name="position_filter_short" type="position_filter_short" />
+  -->
+
+  <!--   All TF node   -->
+  <!-- 	TF listen node -->
+  <include file="$(find robot_setup_tf)/launch/tf.launch" />
+
+  <!-- 	sensor fusion node -->
+  <node pkg="sensor_fusion" type="imu_vision_fusion" name="imu_vision_fusion" >
+  </node>
+
+  <!-- 	traj gen/fol node -->
+
+</launch>

@@ -1,0 +1,29 @@
+x 	= F x 	  + B u
+9x1 	= 9x9 9x1 + 9x3 3x1
+
+x = [pos, vel, bias]'
+
+F = [I_3x3      diag(dt)_3x3 zeros_3x3
+     zeros_3x3  I_3x3        diag(-dt)_3x3
+     zeros_3x3  zeros_3x3    I_3x3]
+
+B = [zeros_3x3
+     diag(dt)_3x3
+     zeros_3x3]
+
+u = [acc_3x1]
+
+
+P = FPF^T + Q
+all 9x9
+
+
+y 	= z - H x
+3x1	 3x1  3x9 9x1
+
+H = [I_3x3  zeros_3x3  zeros_3x3]
+
+S 	= H * P * H^T + R;
+3x3	3x9 9x9 9x3  3x3
+
+

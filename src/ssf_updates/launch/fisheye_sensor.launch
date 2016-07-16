@@ -1,0 +1,8 @@
+<launch>
+    <node name="fisheye_sensor" pkg="ssf_updates" type="fisheye_sensor" clear_params="true" output="screen">
+            <remap from="ssf_core/imu_state_input" to="imu/data" />
+            <remap from="ssf_core/fisheye_measurement" to="/vision_transformed" />
+
+            <rosparam file="$(find ssf_updates)/fisheye_sensor_fix.yaml"/>
+    </node>
+</launch>
